@@ -2,6 +2,7 @@ package com.alura.anotaai
 
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -36,13 +37,19 @@ class MainActivity : ComponentActivity() {
 
     private fun startRecording(audioPath: String) {
         val context = this
-        val mediaRecorder = MediaRecorder()
+        val mediaRecorder: MediaRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            MediaRecorder(this)
+        } else {
+            MediaRecorder()
+        }
         recorder = mediaRecorder
             .apply {
                 setAudioSource(MediaRecorder.AudioSource.MIC)
                 setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                 setOutputFile(audioPath)
                 setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+                setAudioEncodingBitRate(128000)
+                setAudioSamplingRate(44100)
 
                 try {
                     prepare()
