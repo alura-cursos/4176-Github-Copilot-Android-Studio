@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -97,28 +98,49 @@ fun HomeScreen(
         content = { paddingValues ->
             Box(
                 modifier = Modifier
-                    .fillMaxSize(),
-                contentAlignment = Alignment.BottomStart
+                    .fillMaxSize()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
             ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                    contentPadding = PaddingValues(8.dp)
-                ) {
-                    items(state.notes) { item ->
-                        ItemNote(
-                            note = item,
-                            onClick = { onOpenNote(item.id) },
-                            onLongPress = {
-                                viewModel.setItemToDelete(item)
-                            }
+                if (state.notes.isEmpty()) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.align(Alignment.Center)
+                    ) {
+                        AsyncImage(
+                            R.mipmap.ic_launcher_foreground,
+                            contentDescription = "Logo do app",
+                            modifier = Modifier
+                                .size(300.dp)
+                                .padding(bottom = 16.dp)
+                        )
+                        Text(
+                            text = "Sem notas disponíveis. Toque no botão + para adicionar sua primeira nota!",
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(16.dp),
+                            textAlign = TextAlign.Center
                         )
                     }
-                }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(paddingValues),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        contentPadding = PaddingValues(8.dp)
+                    ) {
+                        items(state.notes) { item ->
+                            ItemNote(
+                                note = item,
+                                onClick = { onOpenNote(item.id) },
+                                onLongPress = {
+                                    viewModel.setItemToDelete(item)
+                                }
+                            )
+                        }
+                    }
 
-                if (state.notes.isNotEmpty()) {
                     AsyncImage(
                         R.mipmap.ic_launcher_foreground,
                         contentDescription = "Logo do app",
@@ -128,7 +150,6 @@ fun HomeScreen(
                     )
                 }
             }
-
             state.itemToDelete?.let { itemId ->
                 AlertDialog(
                     onDismissRequest = { viewModel.setItemToDelete(null) },
