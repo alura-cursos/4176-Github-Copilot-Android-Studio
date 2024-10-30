@@ -201,15 +201,11 @@ fun ItemNote(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-
-            val thumbnail = if (note.thumbnail == NoteType.AUDIO.name) {
-                R.drawable.ic_mic
-            } else if (note.thumbnail == NoteType.TEXT.name) {
-                R.drawable.ic_title
-            } else {
-                note.thumbnail
+            val thumbnail = when (note.thumbnail) {
+                NoteType.AUDIO.name -> R.drawable.ic_mic
+                NoteType.TEXT.name -> R.drawable.ic_title
+                else -> note.thumbnail
             }
-
 
             Column(
                 modifier = Modifier
