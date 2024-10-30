@@ -39,6 +39,7 @@ fun NavHost(
         composable<NoteRoutes.NoteDetail> { backStackEntry ->
             val noteDetail: NoteRoutes.NoteDetail = backStackEntry.toRoute()
             NoteScreen(
+                noteToEdit = noteDetail.noteId,
                 onBack = { navController.popBackStack() },
                 onStartRecording = { startRecording(it) },
                 onStopRecording = stopRecording,
