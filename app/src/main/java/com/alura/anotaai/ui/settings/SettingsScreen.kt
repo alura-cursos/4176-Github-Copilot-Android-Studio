@@ -23,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -78,7 +79,7 @@ fun SettingsScreen(
                     modifier = Modifier.size(300.dp),
                 )
                 Text(
-                    text = "Aqui você gerencia suas notas de uma maneira mais ampla. Novas funções disponíveis em breve",
+                    text = stringResource(R.string.aqui_voce_gerencia),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(horizontal = 16.dp),
                     fontSize = MaterialTheme.typography.bodyLarge.fontSize,
@@ -90,7 +91,7 @@ fun SettingsScreen(
 
                 // Texto com a quantidade de notas cadastradas
                 Text(
-                    text = "Notas cadastradas: ${state.notesCount}",
+                    text = stringResource(R.string.notas_cadastradas, state.notesCount),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(horizontal = 16.dp),
                     fontSize = MaterialTheme.typography.bodyLarge.fontSize,
@@ -103,7 +104,7 @@ fun SettingsScreen(
                     onClick = { viewModel.showDeleteDialog(true) },
                     modifier = Modifier.padding(top = 16.dp)
                 ) {
-                    Text("Apagar todas as notas")
+                    Text(stringResource(R.string.apagar_todas_as_notas))
                 }
             }
 
@@ -111,7 +112,7 @@ fun SettingsScreen(
                 AlertDialog(
                     onDismissRequest = { viewModel.showDeleteDialog(false) },
                     title = { Text(text = "Apagar todas notas") },
-                    text = { Text("Tem certeza que deseja excluir todas as notas?") },
+                    text = { Text(stringResource(R.string.tem_certeza_que_deseja_excluir_todas_as_notas)) },
                     confirmButton = {
                         Button(
                             onClick = {
