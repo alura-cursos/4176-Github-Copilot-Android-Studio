@@ -180,7 +180,6 @@ private fun capturePhoto(
             val correctedBitmap: Bitmap = image
                 .toBitmap()
                 .rotateBitmap(image.imageInfo.rotationDegrees)
-                .flipHorizontally()
 
             onPhotoCaptured(correctedBitmap)
             image.close()
@@ -190,13 +189,6 @@ private fun capturePhoto(
             Log.e("CameraContent", "Error ao capturar imagem", exception)
         }
     })
-}
-
-fun Bitmap.flipHorizontally(): Bitmap {
-    val matrix = android.graphics.Matrix().apply {
-        preScale(-1.0f, 1.0f)
-    }
-    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }
 
 
