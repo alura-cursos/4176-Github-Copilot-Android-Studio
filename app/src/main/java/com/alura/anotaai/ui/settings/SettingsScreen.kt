@@ -85,6 +85,26 @@ fun SettingsScreen(
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.secondary
                 )
+
+                Spacer(modifier = Modifier.size(50.dp))
+
+                // Texto com a quantidade de notas cadastradas
+                Text(
+                    text = "Notas cadastradas: ${state.notesCount}",
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    fontSize = MaterialTheme.typography.bodyLarge.fontSize,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+
+                // Botão para apagar todas as notas
+                Button(
+                    onClick = { viewModel.showDeleteDialog(true) },
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    Text("Apagar todas as notas")
+                }
             }
 
             if (state.showConfirmDeleteDialog) {
@@ -94,7 +114,10 @@ fun SettingsScreen(
                     text = { Text("Tem certeza que deseja excluir todas as notas?") },
                     confirmButton = {
                         Button(
-                            onClick = { viewModel.showDeleteDialog(false) }
+                            onClick = {
+                                viewModel.showDeleteDialog(false)
+                                viewModel.deleteAllNotes()
+                            }
                         ) {
                             Text("Sim")
                         }
