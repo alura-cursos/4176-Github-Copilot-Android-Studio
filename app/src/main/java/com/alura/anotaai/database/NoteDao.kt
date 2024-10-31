@@ -30,4 +30,7 @@ interface NoteDao {
 
     @Query("DELETE FROM Notes")
     suspend fun deleteAll()
+
+    @Query("SELECT COUNT(*) FROM Notes")
+    suspend fun countNotes(): Int
 }

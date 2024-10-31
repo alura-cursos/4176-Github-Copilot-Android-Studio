@@ -85,6 +85,10 @@ class NoteRepository @Inject constructor(
         audioNoteDao.deleteAll()
     }
 
+    suspend fun countNotes(): Int {
+        return noteDao.countNotes()
+    }
+
 }
 
 
